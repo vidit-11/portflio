@@ -2,7 +2,6 @@ import Socials from "@/components/Socials";
 import { Button } from "@/components/ui/Button";
 import { FileDown } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { Card } from "./Section";
 
 import homeContent from "@/data/home.json";
@@ -46,9 +45,10 @@ export default function Profile({ className }: { className?: string }) {
 
         <div className="mt-auto flex flex-wrap items-center gap-5">
           <Button asChild>
-            <Link href="/resume.pdf" target="_blank">
+            {/* plain <a>: next/link would prefetch the PDF as a page and 404 */}
+            <a href="/resume.pdf" target="_blank">
               Resume <FileDown />
-            </Link>
+            </a>
           </Button>
           <Socials />
         </div>

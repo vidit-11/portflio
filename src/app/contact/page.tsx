@@ -33,8 +33,11 @@ export default function ContactPage() {
               <li key={s.name}>
                 <Link
                   href={s.href}
-                  target="_blank"
-                  rel="noreferrer"
+                  // mailto: links in a new tab do nothing in Chrome
+                  {...(s.href.startsWith("http") && {
+                    target: "_blank",
+                    rel: "noreferrer",
+                  })}
                   className="group flex items-center gap-3 px-6 py-4 transition-colors hover:bg-muted/50"
                 >
                   <Icon

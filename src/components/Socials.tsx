@@ -11,9 +11,12 @@ export default function Socials() {
         <a
           href={item.href}
           key={item.name}
-          target="_blank"
+          // mailto: links in a new tab do nothing in Chrome without a mail handler
+          {...(item.href.startsWith("http") && {
+            target: "_blank",
+            rel: "noopener noreferrer",
+          })}
           className="text-muted-foreground hover:text-foreground"
-          rel="noopener noreferrer"
           title={item.name}
         >
           <span className="sr-only">{item.name}</span>
