@@ -41,14 +41,14 @@ The site builds and runs without these. Only the contact form needs them.
 
 All content lives in `src/data/` and is validated by the zod schemas in `src/lib/schemas.ts`.
 
-| File                             | What it controls                                                                                                           |
-| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `home.json`                      | Name, role, headline, about text, current role, domain, and `stats`: the numbers shown next to the profile (title + value) |
-| `career.json` / `education.json` | Experience and education lists. Dates look like `Jan 2024`; omit `end` for a current role                                  |
-| `stack.json`                     | Skills grouped by category                                                                                                 |
-| `projects.json`                  | Project cards; `status` is `deployed`, `maintained`, `completed` or `archived`. The first 4 appear on the home page        |
-| `certifications.json`            | Certification cards                                                                                                        |
-| `socials.json`                   | LinkedIn / GitHub / email links                                                                                            |
+| File                             | What it controls                                                                                                                     |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `home.json`                      | Name, role, headline, about text, current role, domain, and `stats`: the four numbers next to the profile (title, value, short note) |
+| `career.json` / `education.json` | Experience and education lists. Dates look like `Jan 2024`; omit `end` for a current role                                            |
+| `stack.json`                     | Skills grouped by category                                                                                                           |
+| `projects.json`                  | Project cards; `status` is `deployed`, `maintained`, `completed` or `archived`. The first 4 appear on the home page                  |
+| `certifications.json`            | Certification cards                                                                                                                  |
+| `socials.json`                   | LinkedIn / GitHub / email links                                                                                                      |
 
 Images to replace:
 

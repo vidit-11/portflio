@@ -19,7 +19,7 @@
           "description": [
             "Moved staging servers from Apache and Tomcat to k3s, and swapped Prometheus for VictoriaMetrics and Loki so monitoring fit on low-resource machines.",
             "Moved 25 engineers from Jira and Bitbucket to GitHub Teams, with project management handled through GitHub Actions. Tooling went from $300 to $100 a month (67% less).",
-            "Built CI/CD pipelines for 55+ apps (React, Java, Python). Releases went from every two weeks to 2–3 a day, and most pipelines finish in under 2 minutes.",
+            "Built CI/CD pipelines for 80+ apps (React, Java, Python). Releases went from every two weeks to 2–3 a day, and most pipelines finish in under 2 minutes.",
             "Replaced a shared all-access database user with a version-controlled DB pipeline, so every schema change is logged.",
             "Centralized the staging databases and set up redundant MySQL and PostgreSQL instances so dev work kept going during the migration.",
             "Load-tested app modules with k6."

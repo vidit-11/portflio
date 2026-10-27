@@ -1,10 +1,10 @@
 import ExperienceList from "@/components/home/ExperienceList";
+import Snapshot from "@/components/home/Snapshot";
 import Profile from "@/components/home/Profile";
 import ProjectCard from "@/components/home/ProjectCard";
 import { Card, Section } from "@/components/home/Section";
 import SideList from "@/components/home/SideList";
 import Skills from "@/components/home/Skills";
-import Snapshot from "@/components/home/Snapshot";
 import { ChaosTarget } from "@/components/chaos/Chaos";
 import DeployButton from "@/components/DeployButton";
 import { YamlSwitch } from "@/components/yaml/ViewMode";
@@ -39,8 +39,6 @@ export default function Home() {
     .find((s) => s.icon === "mail")
     ?.href.replace(/^mailto:/, "");
 
-  const stats = homeStatsSchema.parse(homeContent.stats);
-
   return (
     <YamlSwitch
       yaml={engineerYaml()}
@@ -51,7 +49,10 @@ export default function Home() {
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <Profile className="lg:col-span-2" />
           <ChaosTarget pod="status">
-            <Snapshot career={career} stats={stats} />
+            <Snapshot
+              career={career}
+              stats={homeStatsSchema.parse(homeContent.stats)}
+            />
           </ChaosTarget>
         </div>
 

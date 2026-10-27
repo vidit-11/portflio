@@ -18,7 +18,7 @@
       "architecture": {
         "groups": [
           {
-            "label": "k3s HA · 3 nodes · Ansible",
+            "label": "k3s HA · Ansible",
             "x": 150,
             "y": 18,
             "w": 340,

@@ -6,8 +6,8 @@
   "avatar": "/img/avatar.svg",
   "headline": "I set up and run Kubernetes clusters, CI/CD pipelines and monitoring.",
   "about": [
-    "I'm a DevOps Engineer at Qpaix Infitech. I joined as an intern in January 2026 and went full-time in August. Most of my work is looking after our k3s clusters and monitoring on production servers, CI/CD pipelines for 55+ apps, and deployments for Gujarat Government projects.",
-    "I also built a 3-node k3s cluster on desktop PCs to try out GitOps with Argo CD and secrets management with Infisical."
+    "I'm a DevOps Engineer at Qpaix Infitech. I joined as an intern in January 2026 and went full-time in August. Most of my work is looking after our k3s clusters and monitoring on production servers, CI/CD pipelines for 80+ apps, and deployments for Gujarat Government projects.",
+    "I also built a highly available k3s cluster on desktop PCs to try out GitOps with Argo CD and secrets management with Infisical."
   ],
   "status": {
     "role": "DevOps Engineer",
@@ -17,19 +17,23 @@
   "stats": [
     {
       "title": "Apps on CI/CD",
-      "value": "55+"
+      "value": "80+",
+      "note": "React, Java and Python"
     },
     {
-      "title": "Deploys per day",
-      "value": "2–3"
+      "title": "Delivery speed",
+      "value": "Faster",
+      "note": "releases through automated CI/CD pipelines"
     },
     {
-      "title": "Pipeline runtime",
-      "value": "<2 min"
+      "title": "Tooling cost",
+      "value": "~67%",
+      "note": "$300 → $100 a month"
     },
     {
-      "title": "Tooling cost cut",
-      "value": "67%"
+      "title": "Reliability",
+      "value": "HA",
+      "note": "highly available setups built to survive failures"
     }
   ]
 }

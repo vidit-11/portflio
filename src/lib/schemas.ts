@@ -106,6 +106,7 @@ export const certificationSchema = z.object({
   certifications: z.array(certification),
 });
 
+// Numbers shown next to the profile, each with a short line of context
 export const homeStatsSchema = z.array(
-  z.object({ title: z.string(), value: z.string() }),
+  z.object({ title: z.string(), value: z.string(), note: z.string() }),
 );
