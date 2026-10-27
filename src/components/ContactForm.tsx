@@ -59,7 +59,7 @@ export default function ContactForm() {
   const handleFormSubmit: SubmitHandler<Inputs> = async (data) => {
     const formElement = document.querySelector("form");
     const honeypot = formElement?.querySelector(
-      'input[name="website"]',
+      'input[name="hp_field"]',
     ) as HTMLInputElement;
 
     if (honeypot?.value) {
@@ -90,11 +90,13 @@ export default function ContactForm() {
   return (
     <>
       <form onSubmit={handleSubmit(handleFormSubmit)}>
-        {/* Honeypot */}
+        {/* Honeypot: the name must not look like a real field ("website",
+            "url"...), or Chrome autofills it and real users get flagged */}
         <input
           type="text"
-          name="website"
+          name="hp_field"
           tabIndex={-1}
+          aria-hidden="true"
           autoComplete="off"
           className="pointer-events-none absolute -left-[9999px] opacity-0"
         />
