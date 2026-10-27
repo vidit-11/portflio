@@ -1,4 +1,3 @@
-import { ChaosButton } from "./chaos/Chaos";
 import Socials from "./Socials";
 
 import homeContent from "@/data/home.json";
@@ -11,7 +10,6 @@ export default function Footer() {
           <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} {homeContent.name}
           </p>
-          <ChaosButton />
         </div>
         <Socials />
       </div>

@@ -69,7 +69,7 @@ export function YamlToggle() {
       aria-pressed={on}
       title={on ? "Back to the normal page" : "View this page as YAML"}
       className={cn(
-        "inline-flex h-8 items-center gap-1.5 rounded-md px-2.5 font-mono text-xs transition-colors",
+        "inline-flex h-8 items-center gap-1.5 rounded-md px-2 font-mono text-xs transition-colors sm:px-2.5",
         on
           ? "bg-foreground text-background"
           : "text-muted-foreground hover:bg-accent hover:text-foreground",

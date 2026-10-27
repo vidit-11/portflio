@@ -28,7 +28,7 @@ export default function ExperienceList({ career }: { career: Experience[] }) {
                 </Link>
               </div>
               <p className="font-mono text-xs text-muted-foreground">
-                {position.start} — {position.end ?? "Present"}
+                {position.start} – {position.end ?? "Present"}
               </p>
             </div>
             {position.description && (

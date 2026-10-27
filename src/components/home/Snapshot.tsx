@@ -20,10 +20,7 @@ export default function Snapshot({ career, stats }: Props) {
     <div className="flex flex-col gap-4">
       <Card>
         <p className="flex items-center gap-2 text-sm text-muted-foreground">
-          <span className="relative flex size-2">
-            <span className="absolute inline-flex size-full animate-ping rounded-full bg-ok opacity-60 [animation-duration:2s]" />
-            <span className="relative inline-flex size-2 rounded-full bg-ok" />
-          </span>
+          <span className="size-2 rounded-full bg-ok" aria-hidden="true" />
           Currently
         </p>
         <p className="mt-3 text-lg font-semibold leading-snug">{status.role}</p>

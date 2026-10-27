@@ -56,9 +56,6 @@ const config: Config = {
         mono: "var(--font-mono)",
       },
       keyframes: {
-        blink: {
-          "50%": { opacity: "0" },
-        },
         flow: {
           to: { strokeDashoffset: "-20" },
         },
@@ -87,7 +84,6 @@ const config: Config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        blink: "blink 1s step-end infinite",
         flow: "flow 1s linear infinite",
         shake: "shake 0.4s ease-in-out 2",
       },

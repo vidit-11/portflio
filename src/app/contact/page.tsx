@@ -19,7 +19,7 @@ export default function ContactPage() {
     <article className="flex flex-col gap-10 py-10 sm:py-14">
       <PageHeader
         title="Get in touch"
-        description="Open to DevOps, SRE and platform roles. I usually reply within a day."
+        description="I'm open to DevOps and SRE roles. Use the form or email me directly."
       />
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">

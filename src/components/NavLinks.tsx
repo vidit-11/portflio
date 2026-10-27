@@ -22,7 +22,7 @@ export default function NavLinks({ links }: Props) {
               title={nav.title}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "rounded-md px-2 py-1.5 text-sm transition-colors sm:px-3",
+                "rounded-md px-1.5 py-1.5 text-sm transition-colors min-[360px]:px-2 sm:px-3",
                 active
                   ? "text-foreground"
                   : "text-muted-foreground hover:text-foreground",

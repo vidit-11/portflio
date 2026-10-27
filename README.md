@@ -1,4 +1,4 @@
-# Vidit Singh Chauhan — DevOps Portfolio
+# Vidit Singh Chauhan: DevOps Portfolio
 
 A clean, card-based personal portfolio for a DevOps engineer: profile and current role, key numbers, skills grouped by category, experience, education, certifications and projects. It has a light/dark theme, tag filtering on the projects page, and a contact form that sends email through Resend.
 

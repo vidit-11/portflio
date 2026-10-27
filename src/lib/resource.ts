@@ -99,7 +99,6 @@ export function engineerYaml() {
       phase: "Available",
       conditions: [
         { type: "OpenToWork", status: "True", reason: "LookingForDevOpsRoles" },
-        { type: "CoffeeLevel", status: "True", reason: "Sufficient" },
       ],
     },
   });

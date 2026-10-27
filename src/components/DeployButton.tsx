@@ -9,13 +9,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 export const PREFILL_KEY = "contact-prefill";
 
 const STEPS = [
-  ["checkout", "intent: hiring or collaboration"],
-  ["build", "compiling a friendly hello"],
-  ["test", "spam filter: passed · human: probably"],
-  ["deploy", "scheduling a chat with Vidit"],
+  ["checkout", "loading contact form"],
+  ["build", "preparing message"],
+  ["test", "checking connection"],
+  ["deploy", "opening /contact"],
 ] as const;
 
-export default function DeployButton({ label = "Get in touch" }) {
+export default function DeployButton({ label = "Contact me" }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [done, setDone] = useState(0);

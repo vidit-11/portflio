@@ -30,7 +30,7 @@ export default function ThemeToggle() {
       ) : (
         <MoonIcon className="size-4 text-muted-foreground" />
       )}
-      <span className="sr-only">Theme Toggle</span>
+      <span className="sr-only">Toggle theme</span>
     </Button>
   );
 }

@@ -20,10 +20,7 @@ export default function ProjectPage() {
       filename="projects.yaml"
     >
       <article className="flex flex-col gap-10 py-10 sm:py-14">
-        <PageHeader
-          title="Projects"
-          description="Infrastructure, pipelines and tooling I've built and kept running."
-        />
+        <PageHeader title="Projects" description="Some things I've built." />
         <ProjectGrid projects={projects} />
       </article>
     </YamlSwitch>

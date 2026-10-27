@@ -122,7 +122,7 @@ export function ChaosProvider({ children }: { children: React.ReactNode }) {
 
     const all = Array.from(targets.current.entries());
     if (all.length === 0) {
-      toast("No pods running on this page. Nothing to break 🤷");
+      toast("Nothing on this page to break.");
       return;
     }
     // Prefer something the visitor can actually see
@@ -267,11 +267,14 @@ export function ChaosButton() {
       type="button"
       onClick={trigger}
       disabled={!!phase}
-      className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 font-mono text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:opacity-50"
+      className="inline-flex h-8 items-center gap-1.5 rounded-md px-2 font-mono text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:opacity-50 sm:px-2.5"
       title="Simulate a realistic incident on part of this page and watch it recover"
     >
       <Zap className="size-3.5" aria-hidden="true" />
-      {phase ? "chaos in progress…" : "inject failure"}
+      {/* Icon only on phones so the header fits on one line */}
+      <span className="sr-only sm:not-sr-only">
+        {phase ? "chaos in progress…" : "inject failure"}
+      </span>
     </button>
   );
 }

@@ -78,11 +78,11 @@ export default function ContactForm() {
     const result = await sendEmail(formData);
 
     if (result.error) {
-      toast.error("An error occurred! Please try again later.");
+      toast.error("Couldn't send your message. Please try again later.");
       return;
     }
 
-    toast.success("Message sent successfully!");
+    toast.success("Message sent. I'll get back to you soon.");
     reset();
     setFormData(null);
   };
@@ -134,7 +134,7 @@ export default function ContactForm() {
           <div className="h-32 sm:col-span-2">
             <Textarea
               rows={4}
-              placeholder="Hiring, a project, an infra question, or just want to say hi? Drop a note 😊"
+              placeholder="Your message"
               autoComplete="Message"
               className="resize-none"
               {...register("message")}
@@ -166,22 +166,18 @@ export default function ContactForm() {
       <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Just a quick check! 🤔</AlertDialogTitle>
+            <AlertDialogTitle>Is your email correct?</AlertDialogTitle>
             <AlertDialogDescription asChild>
               <div>
-                <p>
-                  Hey! Remember to use a real email so I can reply you
-                  personally.
-                </p>
-                <p className="mt-4 font-medium">
-                  I&apos;ll be sending my reply to:{" "}
+                <p className="font-medium">
+                  I&apos;ll reply to:{" "}
                   <span className="text-foreground">{formData?.email}</span>
                 </p>
               </div>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Let me fix that</AlertDialogCancel>
+            <AlertDialogCancel>Edit</AlertDialogCancel>
             <AlertDialogAction onClick={processForm} disabled={isSubmitting}>
               {isSubmitting ? (
                 <>

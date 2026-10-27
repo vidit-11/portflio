@@ -2,7 +2,7 @@
   "projects": [
     {
       "name": "Self-hosted HA Kubernetes Platform",
-      "description": "A proof-of-concept on-prem platform on three desktop PCs: a highly available k3s cluster (embedded etcd, survives any one node failing) provisioned with Ansible and ansible-vault. Deploys are pull-based GitOps: CI builds and tags the image, bumps the tag in a Helm config repo, and Argo CD syncs the cluster with self-heal. Infisical manages secrets and syncs them into pods through its Kubernetes operator, and Traefik serves everything over TLS with admin tools locked to the LAN. Documented 28 issues and fixes along the way, from sudo-rs on Ubuntu 26.04 to Helm render errors in Argo CD.",
+      "description": "A proof of concept: three desktop PCs running a highly available k3s cluster (embedded etcd, so it keeps working if one node goes down), set up with Ansible. CI builds the image and updates the tag in a Helm config repo, then Argo CD syncs the change to the cluster. Secrets live in a self-hosted Infisical and reach pods through its Kubernetes operator. Traefik handles ingress and TLS, and Argo CD and Infisical are only reachable from the LAN. I kept a log of the 28 problems I hit and how I fixed each one.",
       "status": "maintained",
       "tags": [
         "k3s",
@@ -31,49 +31,49 @@
             "label": "Users",
             "x": 70,
             "y": 55,
-            "note": "Only ports 80/443 reach the cluster. The Kubernetes API is never exposed; remote admin goes through a VPN."
+            "note": "Only ports 80 and 443 are open. The Kubernetes API isn't exposed; I use a VPN for remote admin."
           },
           {
             "id": "traefik",
             "label": "Traefik",
             "x": 240,
             "y": 55,
-            "note": "Runs as a DaemonSet with externalTrafficPolicy: Local so real client IPs are kept. An IP-allowlist middleware keeps Argo CD and Infisical LAN-only, and a local mkcert CA provides trusted TLS."
+            "note": "Runs as a DaemonSet with externalTrafficPolicy: Local so it sees real client IPs. An IP allowlist keeps Argo CD and Infisical LAN-only. TLS certs come from a local mkcert CA."
           },
           {
             "id": "git",
             "label": "Git repo",
             "x": 70,
             "y": 150,
-            "note": "Private GitOps repo holding the Helm chart and values. Git is the source of truth; Argo CD pulls it with a read-only deploy key."
+            "note": "Private repo with the Helm chart and values. Argo CD reads it with a read-only deploy key."
           },
           {
             "id": "argocd",
             "label": "Argo CD",
             "x": 240,
             "y": 150,
-            "note": "Renders the Helm chart and syncs it automatically with prune and self-heal, so manual changes in the cluster are reverted."
+            "note": "Renders the Helm chart and syncs automatically with prune and self-heal, so manual changes in the cluster get reverted."
           },
           {
             "id": "app",
             "label": "App pods",
             "x": 415,
             "y": 150,
-            "note": "A Spring Boot service pulled from a private registry. Config comes in as environment variables from a Kubernetes Secret, and pods restart on their own when a secret changes."
+            "note": "A Spring Boot service from a private registry. It gets its config as env vars from a Kubernetes Secret and restarts automatically when a secret changes."
           },
           {
             "id": "infisical",
             "label": "Infisical",
             "x": 240,
             "y": 245,
-            "note": "Self-hosted secrets manager (with PostgreSQL and Redis), installed with Helm. Nothing secret is stored in Git."
+            "note": "Self-hosted secrets manager with PostgreSQL and Redis, installed with Helm. No secret values in Git."
           },
           {
             "id": "operator",
             "label": "Operator",
             "x": 415,
             "y": 245,
-            "note": "Infisical Operator authenticates with a machine identity and syncs a secrets folder into a Kubernetes Secret over the in-cluster service address."
+            "note": "Logs in to Infisical with a machine identity and copies a secrets folder into a Kubernetes Secret, using the in-cluster service address."
           }
         ],
         "edges": [
@@ -108,56 +108,56 @@
             "label": "Source repo",
             "x": 75,
             "y": 50,
-            "note": "Application code lives in its own repo, separate from the config (GitOps) repo."
+            "note": "App code, in a separate repo from the Helm config."
           },
           {
             "id": "push",
             "label": "git push main",
             "x": 240,
             "y": 50,
-            "note": "A push to the target branch triggers the pipeline."
+            "note": "Pushing to the target branch starts the pipeline."
           },
           {
             "id": "build",
             "label": "Build/test/push",
             "x": 415,
             "y": 150,
-            "note": "Runs tests, builds the Docker image and pushes it to the private registry with an immutable commit-SHA tag."
+            "note": "Runs tests, builds the Docker image and pushes it to the private registry, tagged with the commit SHA."
           },
           {
             "id": "clone",
             "label": "Clone config",
             "x": 240,
             "y": 150,
-            "note": "Checks out the config repo that holds the Helm chart and values, using a token that can only push to that repo. CI never gets cluster credentials."
+            "note": "Checks out the config repo with a token that can only push to that repo. CI has no access to the cluster."
           },
           {
             "id": "bump",
             "label": "Bump Helm tag",
             "x": 75,
             "y": 150,
-            "note": "Sets image.tag in the service's values.yaml to the new SHA, commits and pushes, retrying with a rebase if another build pushed first."
+            "note": "Updates image.tag in the service's values.yaml, then commits and pushes. If another build pushed first, it rebases and retries."
           },
           {
             "id": "argocd",
             "label": "Argo CD",
             "x": 75,
             "y": 250,
-            "note": "Notices the new commit in the config repo and renders the Helm chart again. The Kubernetes API never has to be exposed to CI."
+            "note": "Picks up the new commit in the config repo and renders the chart again. CI never talks to the Kubernetes API."
           },
           {
             "id": "sync",
             "label": "Cluster sync",
             "x": 240,
             "y": 250,
-            "note": "Applies the change with prune and self-heal, so the cluster always matches Git. Rolling back is just a git revert of the tag commit."
+            "note": "Applies the change with prune and self-heal. To roll back, revert the tag commit."
           },
           {
             "id": "rollout",
             "label": "Rolling update",
             "x": 415,
             "y": 250,
-            "note": "New pods with the new image tag replace the old ones gradually, with secrets still injected by the Infisical Operator."
+            "note": "New pods replace the old ones one at a time. Secrets still come from the Infisical Operator."
           }
         ],
         "edges": [
@@ -173,7 +173,7 @@
     },
     {
       "name": "DevOps Pipeline & Kubernetes Research",
-      "description": "Benchmarked 4 Kubernetes distributions (kubeadm, kind, minikube, k3s) on RAM and resource use and picked k3s for low-resource servers. Built a full build, test and deploy pipeline for Java and React apps on a self-hosted k3s cluster, with Grafana, VictoriaMetrics and Loki dashboards for deployments and logs.",
+      "description": "Compared kubeadm, kind, minikube and k3s on RAM and CPU use, and picked k3s for low-resource servers. Then built a build, test and deploy pipeline for Java and React apps on a self-hosted k3s cluster, with Grafana, VictoriaMetrics and Loki for metrics and logs.",
       "status": "completed",
       "tags": [
         "k3s",
@@ -215,42 +215,42 @@
             "label": "git push",
             "x": 85,
             "y": 70,
-            "note": "Java and React apps; every push to main starts the pipeline."
+            "note": "Java and React apps. Every push to main starts the pipeline."
           },
           {
             "id": "actions",
             "label": "GitHub Actions",
             "x": 250,
             "y": 70,
-            "note": "Build, test and deploy stages, with Docker images built in CI."
+            "note": "Build, test and deploy jobs. Docker images are built in CI."
           },
           {
             "id": "k3s",
             "label": "k3s cluster",
             "x": 410,
             "y": 70,
-            "note": "Self-hosted k3s, chosen after benchmarking kubeadm, kind, minikube and k3s for RAM and resource use."
+            "note": "Self-hosted k3s, picked after comparing kubeadm, kind, minikube and k3s on RAM and CPU use."
           },
           {
             "id": "vm",
             "label": "VictoriaMetrics",
             "x": 250,
             "y": 190,
-            "note": "Lighter than Prometheus on small servers while staying Prometheus-compatible."
+            "note": "Uses less memory than Prometheus on small servers and still accepts Prometheus queries."
           },
           {
             "id": "loki",
             "label": "Loki",
             "x": 410,
             "y": 190,
-            "note": "Log aggregation for every app on the cluster."
+            "note": "Collects logs from every app on the cluster."
           },
           {
             "id": "grafana",
             "label": "Grafana",
             "x": 250,
             "y": 250,
-            "note": "Developer-facing dashboards for deployment monitoring and logs."
+            "note": "Dashboards for deployments and logs."
           }
         ],
         "edges": [
@@ -265,7 +265,7 @@
     },
     {
       "name": "Automated Receipt Processing",
-      "description": "A fully serverless pipeline that automates expense tracking end to end. AWS Textract extracts key-value pairs and line items from receipt images with over 95% accuracy, results are stored in DynamoDB, and SES emails the user a summary, so there's no manual data entry.",
+      "description": "A serverless expense tracker on AWS. Uploading a receipt image to S3 triggers a Lambda function. Textract reads the fields and line items (over 95% accuracy), the results go into DynamoDB, and SES emails the user a summary.",
       "status": "completed",
       "tags": ["Python", "S3", "Lambda", "Textract", "DynamoDB", "SES"],
       "links": [
@@ -291,21 +291,21 @@
             "label": "S3 upload",
             "x": 85,
             "y": 150,
-            "note": "A receipt image landing in the bucket triggers the pipeline. No servers to run."
+            "note": "Uploading a receipt image here triggers the Lambda function."
           },
           {
             "id": "lambda",
             "label": "Lambda",
             "x": 230,
             "y": 150,
-            "note": "Python function that orchestrates extraction, storage and notification."
+            "note": "Python function that calls Textract, saves the results and sends the email."
           },
           {
             "id": "textract",
             "label": "Textract",
             "x": 400,
             "y": 70,
-            "note": "Extracts key-value pairs and line items from unstructured receipts with over 95% accuracy."
+            "note": "Reads key-value pairs and line items from receipt images, with over 95% accuracy."
           },
           {
             "id": "dynamo",
@@ -319,7 +319,7 @@
             "label": "SES",
             "x": 400,
             "y": 230,
-            "note": "Emails the user the extracted receipt details, closing the loop."
+            "note": "Emails the user what was read from the receipt."
           }
         ],
         "edges": [

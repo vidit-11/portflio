@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ChaosButton } from "./chaos/Chaos";
 import NavLinks from "./NavLinks";
 import ThemeToggle from "./ThemeToggle";
 import { YamlToggle } from "./yaml/ViewMode";
@@ -20,7 +21,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-4 px-4 sm:px-6">
+      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-2 px-3 min-[360px]:px-4 sm:gap-4 sm:px-6">
         <Link
           href="/"
           className="flex shrink-0 items-center gap-2 whitespace-nowrap text-sm font-semibold"
@@ -33,8 +34,9 @@ export default function Header() {
             <span className="hidden sm:inline">{rest}</span>
           </span>
         </Link>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center min-[360px]:gap-1">
           <NavLinks links={navLinks} />
+          <ChaosButton />
           <YamlToggle />
           <ThemeToggle />
         </div>

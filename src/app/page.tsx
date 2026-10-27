@@ -122,10 +122,10 @@ export default function Home() {
         <Card className="flex flex-col items-start gap-6 p-8 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-2">
             <h2 className="text-2xl font-semibold tracking-tight">
-              Let&apos;s build something reliable.
+              Get in touch
             </h2>
             <p className="text-muted-foreground">
-              Open to DevOps, SRE and platform roles, or a chat about infra.
+              I&apos;m open to DevOps and SRE roles.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-4">

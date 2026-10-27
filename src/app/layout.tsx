@@ -18,9 +18,9 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
 });
 
-const title = `${homeContent.name} — ${homeContent.role}`;
+const title = `${homeContent.name} | ${homeContent.role}`;
 const description =
-  "DevOps engineer building Kubernetes-native infrastructure, CI/CD pipelines and cost-efficient observability.";
+  "Vidit Singh Chauhan, DevOps engineer in Ahmedabad. Kubernetes, CI/CD, GitOps and monitoring.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(`https://${homeContent.domain}`),

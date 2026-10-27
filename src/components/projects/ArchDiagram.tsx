@@ -208,10 +208,10 @@ export default function ArchDiagram({
         {current ? (
           <>
             <span className="font-medium text-foreground">{current.label}</span>{" "}
-            — {current.note}
+            : {current.note}
           </>
         ) : (
-          <>Hover or tap a component to see why it&apos;s in {name}.</>
+          <>Hover or tap a box for details.</>
         )}
       </p>
     </div>
