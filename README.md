@@ -2,12 +2,10 @@
 
 A clean, card-based personal portfolio for a DevOps engineer: profile and current role, key numbers, skills grouped by category, experience, education, certifications and projects. It has a light/dark theme, tag filtering on the projects page, and a contact form that sends email through Resend.
 
-Started from [tedawf.com](https://github.com/tedawf/tedawf.com) by Ted (MIT).
-
 ## Features
 
 - **View as YAML**: the `yaml` toggle in the header renders the home and projects pages as Kubernetes-style resources (`kubectl get engineer vidit-singh -o yaml`), with copy and download. Built from the same data files in `src/lib/resource.ts`.
-- **Chaos button**: "inject failure" in the footer runs one of three incidents on a visible card: a node going NotReady (pod rescheduled, etcd keeps quorum), a failing liveness probe (kubelet restarts the container) or a stuck rollout (GitOps rollback with `git revert`). Each fires an alert and ends with a short postmortem. Wrap anything in `<ChaosTarget pod="name">` to make it a target.
+- **Chaos button**: "inject failure" in the header runs one of three incidents on a visible card: a node going NotReady (pod rescheduled, etcd keeps quorum), a failing liveness probe (kubelet restarts the container) or a stuck rollout (GitOps rollback with `git revert`). Each fires an alert and ends with a short postmortem. Wrap anything in `<ChaosTarget pod="name">` to make it a target.
 - **Interactive architecture diagrams**: on `/projects`, hover or tap a component to see why it's there. Each project's `architecture` in `projects.json` has `nodes` (id, label, x/y on a 500×300 canvas, note) and `edges` (`[from, to]`). Projects without it fall back to `image`.
 - **Deploy-me contact flow**: "Get in touch" runs a short fake pipeline, then opens the contact form with the message started.
 
