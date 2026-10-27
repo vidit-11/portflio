@@ -67,13 +67,23 @@ Images to replace:
 | `npm run lint`      | ESLint           |
 | `npm run typecheck` | `tsc --noEmit`   |
 
-## Deployment
+## Deployment (CI/CD)
 
-1. Push to GitHub. CI (`.github/workflows/ci.yml`) runs lint, typecheck and build on every push and PR.
-2. Import the repo in [Vercel](https://vercel.com/new) and add the env vars above.
-3. Vercel builds a preview URL for each PR and deploys `main` to production.
-4. Optional: add a custom domain in Vercel and set `domain` in `src/data/home.json`. That value is used for metadata, the sitemap and robots.txt.
+GitHub Actions builds and deploys the site to Vercel (`.github/workflows/ci-cd.yml`). Vercel's own Git deploys are turned off in `vercel.json`, so Actions is the only path to production.
 
-## License
+| Event                    | Jobs                                                                                      |
+| ------------------------ | ----------------------------------------------------------------------------------------- |
+| Pull request to `master` | Lint, typecheck, build, then a preview deploy. The preview URL is posted as a PR comment  |
+| Push to `master`         | Lint, typecheck, build, then a production deploy, then a smoke test against the live site |
 
-MIT. See `LICENSE.txt`.
+The smoke test checks that `/`, `/projects`, `/contact`, `/resume.pdf`, `/sitemap.xml` and `/robots.txt` return 200, that the home page has real content, and that unknown pages return 404.
+
+### One-time setup
+
+1. Create a token at <https://vercel.com/account/tokens>.
+2. Get the org and project IDs: run `npx vercel link` in the repo, then read `orgId` and `projectId` from `.vercel/project.json` (it's gitignored).
+3. In GitHub, go to **Settings → Secrets and variables → Actions** and add `VERCEL_TOKEN`, `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID`.
+4. Set the Resend env vars in the Vercel project settings. `vercel pull` brings them into each build.
+5. Optional: protect `master` so the **Lint, typecheck, build** check has to pass before merging.
+
+Set `domain` in `src/data/home.json` to the production domain. It's used for metadata, the sitemap and robots.txt.
