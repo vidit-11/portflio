@@ -52,7 +52,7 @@ All content lives in `src/data/` and is validated by the zod schemas in `src/lib
 
 Images to replace:
 
-- `public/img/avatar.svg`: your photo. A `.jpg` works too; update `avatar` in `home.json`.
+- `public/img/avatar.png`: profile photo (set by `avatar` in `home.json`)
 - `public/img/projects/`: project images, shown on `/projects` (architecture diagrams work well)
 - `public/resume.pdf`
 
