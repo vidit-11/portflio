@@ -1,0 +1,19 @@
+{
+  "socials": [
+    {
+      "name": "LinkedIn",
+      "href": "https://www.linkedin.com/in/viditchauhan/",
+      "icon": "linkedin"
+    },
+    {
+      "name": "GitHub",
+      "href": "https://github.com/vidit-11",
+      "icon": "github"
+    },
+    {
+      "name": "Email",
+      "href": "mailto:singhvidit.chauhan@gmail.com",
+      "icon": "mail"
+    }
+  ]
+}

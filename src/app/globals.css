@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 240 10% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
+    --primary: 240 10% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 5% 95%;
+    --secondary-foreground: 240 10% 10%;
+    --muted: 240 5% 95%;
+    --muted-foreground: 240 4% 44%;
+    --accent: 240 5% 95%;
+    --accent-foreground: 240 10% 10%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 6% 90%;
+    --input: 240 6% 86%;
+    --ring: 240 10% 10%;
+    --radius: 0.75rem;
+
+    --brand: 24 95% 50%;
+    --ok: 142 70% 40%;
+  }
+
+  .dark {
+    --background: 240 6% 5%;
+    --foreground: 0 0% 95%;
+    --card: 240 5% 8%;
+    --card-foreground: 0 0% 95%;
+    --popover: 240 5% 8%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 0 0% 95%;
+    --primary-foreground: 240 6% 8%;
+    --secondary: 240 4% 13%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 240 4% 13%;
+    --muted-foreground: 240 5% 62%;
+    --accent: 240 4% 13%;
+    --accent-foreground: 0 0% 95%;
+    --destructive: 0 63% 45%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 4% 15%;
+    --input: 240 4% 20%;
+    --ring: 0 0% 85%;
+
+    --brand: 27 96% 61%;
+    --ok: 142 69% 58%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  .title {
+    @apply text-3xl font-semibold tracking-tight sm:text-4xl;
+  }
+  .link {
+    @apply text-muted-foreground transition-colors hover:text-foreground;
+  }
+  .input-error {
+    @apply ml-1 mt-2 text-sm text-rose-400;
+  }
+}
+
+@layer components {
+  /* Minimal prose customizations - let typography plugin handle most styling */
+  .prose {
+    /* Use your design system colors */
+    --tw-prose-links: hsl(var(--primary));
+    --tw-prose-headings: hsl(var(--foreground));
+    --tw-prose-body: hsl(var(--foreground) / 0.9);
+    --tw-prose-bold: hsl(var(--foreground));
+    --tw-prose-code: hsl(var(--foreground));
+    --tw-prose-pre-code: hsl(var(--muted-foreground));
+    --tw-prose-pre-bg: hsl(var(--muted));
+    --tw-prose-th-borders: hsl(var(--border));
+    --tw-prose-td-borders: hsl(var(--border));
+    --tw-prose-quotes: hsl(var(--muted-foreground));
+    --tw-prose-quote-borders: hsl(var(--primary));
+    --tw-prose-hr: hsl(var(--border));
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "stack": [
+    {
+      "category": "orchestration",
+      "items": ["Kubernetes", "k3s", "Docker", "Helm", "etcd"]
+    },
+    {
+      "category": "ci/cd",
+      "items": ["GitHub Actions", "Jenkins", "Argo CD", "GitOps"]
+    },
+    {
+      "category": "observability",
+      "items": ["Grafana", "VictoriaMetrics", "Loki", "Prometheus"]
+    },
+    {
+      "category": "cloud & iac",
+      "items": [
+        "AWS",
+        "GCP",
+        "AWS CLI",
+        "CloudFormation",
+        "Terraform",
+        "Ansible"
+      ]
+    },
+    {
+      "category": "secrets",
+      "items": ["Infisical", "ansible-vault"]
+    },
+    {
+      "category": "scripting",
+      "items": ["Python", "Shell"]
+    },
+    {
+      "category": "testing",
+      "items": ["k6"]
+    },
+    {
+      "category": "version control",
+      "items": ["Git", "GitHub", "GitHub Projects", "Bitbucket"]
+    },
+    {
+      "category": "networking",
+      "items": [
+        "DNS",
+        "Load balancing",
+        "Reverse proxy",
+        "HTTP/HTTPS",
+        "Traefik"
+      ]
+    }
+  ]
+}

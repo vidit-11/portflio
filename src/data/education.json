@@ -1,0 +1,19 @@
+{
+  "education": [
+    {
+      "name": "Gujarat Technological University",
+      "href": "https://www.gtu.ac.in",
+      "positions": [
+        {
+          "title": "BE in Computer Engineering",
+          "start": "Sep 2022",
+          "end": "Jun 2026",
+          "description": [
+            "CGPA 9.26 · CPI 8.45",
+            "Coursework: Cloud Computing, Computer Networking, DBMS, Operating Systems, AI and Information Security"
+          ]
+        }
+      ]
+    }
+  ]
+}

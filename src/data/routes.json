@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "path": "/",
+      "name": "Overview",
+      "description": "Portfolio overview, experience, stack, and featured projects",
+      "showInNav": true
+    },
+    {
+      "path": "/projects",
+      "name": "Projects",
+      "description": "DevOps and infrastructure projects",
+      "showInNav": true
+    },
+    {
+      "path": "/contact",
+      "name": "Contact",
+      "description": "Contact form",
+      "showInNav": true
+    },
+    {
+      "path": "/resume.pdf",
+      "name": "resume",
+      "description": "Resume in PDF format",
+      "showInNav": false
+    }
+  ]
+}

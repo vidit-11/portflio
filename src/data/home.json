@@ -1,0 +1,35 @@
+{
+  "domain": "viditsingh.dev",
+  "name": "Vidit Singh Chauhan",
+  "role": "DevOps Engineer",
+  "location": "Ahmedabad, India",
+  "avatar": "/img/avatar.svg",
+  "headline": "I build Kubernetes-native infrastructure and cost-efficient observability.",
+  "about": [
+    "DevOps Engineer at Qpaix Infitech, where I went from intern to full-time by owning production infrastructure: k3s clusters and observability across multiple production servers, CI/CD pipelines for 55+ applications, and deployments for Gujarat Government projects.",
+    "Most interested in Kubernetes-native platforms, GitOps and observability stacks that don't cost a fortune."
+  ],
+  "status": {
+    "role": "DevOps Engineer",
+    "company": "Qpaix Infitech",
+    "href": "https://qpaix.com"
+  },
+  "stats": [
+    {
+      "title": "Apps on CI/CD",
+      "value": "55+"
+    },
+    {
+      "title": "Deploys per day",
+      "value": "2–3"
+    },
+    {
+      "title": "Pipeline runtime",
+      "value": "<2 min"
+    },
+    {
+      "title": "Tooling cost cut",
+      "value": "67%"
+    }
+  ]
+}

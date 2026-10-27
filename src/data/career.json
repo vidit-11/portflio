@@ -1,0 +1,32 @@
+{
+  "career": [
+    {
+      "name": "Qpaix Infitech Private Limited",
+      "href": "https://qpaix.com",
+      "positions": [
+        {
+          "title": "DevOps Engineer",
+          "start": "Aug 2026",
+          "description": [
+            "Moved from intern to full-time by scaling, maintaining and improving the k3s and observability stack, and replicating it across multiple production servers and project environments.",
+            "Lead DevOps and infrastructure for high-stakes public sector projects, including critical deployments for the Gujarat Government with strict reliability and performance standards.",
+            "Designed and built production-grade CI/CD pipelines that shortened development and testing cycles and sped up deployments."
+          ]
+        },
+        {
+          "title": "DevOps Intern",
+          "start": "Jan 2026",
+          "description": [
+            "Established production-grade observability on resource-constrained staging servers by migrating from Apache Webserver & Tomcat to k3s, replacing Prometheus with VictoriaMetrics + Loki.",
+            "Cut tooling costs by 67% ($300 to $100/month) by migrating 25 engineers from Jira + Bitbucket to GitHub Teams, replicating full project management workflows via GitHub Actions.",
+            "Reduced deployment cycles from bi-weekly releases to 2–3 per day by building CI/CD pipelines for 55+ apps (React, Java, Python), with pipeline runtimes under 2 minutes.",
+            "Enforced schema change accountability with a version-controlled DB pipeline, replacing a shared all-access DB user with auditable deployment change logs.",
+            "Resolved dev environment inconsistencies by centralizing staging DBs and setting up redundant MySQL and PostgreSQL instances for continuity during an infrastructure transition.",
+            "Ran k6 performance tests across application modules to validate scalability and reliability under load."
+          ],
+          "end": "Aug 2026"
+        }
+      ]
+    }
+  ]
+}

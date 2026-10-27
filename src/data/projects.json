@@ -1,0 +1,334 @@
+{
+  "projects": [
+    {
+      "name": "Self-hosted HA Kubernetes Platform",
+      "description": "A proof-of-concept on-prem platform on three desktop PCs: a highly available k3s cluster (embedded etcd, survives any one node failing) provisioned with Ansible and ansible-vault. Deploys are pull-based GitOps: CI builds and tags the image, bumps the tag in a Helm config repo, and Argo CD syncs the cluster with self-heal. Infisical manages secrets and syncs them into pods through its Kubernetes operator, and Traefik serves everything over TLS with admin tools locked to the LAN. Documented 28 issues and fixes along the way, from sudo-rs on Ubuntu 26.04 to Helm render errors in Argo CD.",
+      "status": "maintained",
+      "tags": [
+        "k3s",
+        "Ansible",
+        "Argo CD",
+        "Helm",
+        "Infisical",
+        "Traefik",
+        "etcd",
+        "GitOps"
+      ],
+      "links": [],
+      "architecture": {
+        "groups": [
+          {
+            "label": "k3s HA · 3 nodes · Ansible",
+            "x": 150,
+            "y": 18,
+            "w": 340,
+            "h": 265
+          }
+        ],
+        "nodes": [
+          {
+            "id": "users",
+            "label": "Users",
+            "x": 70,
+            "y": 55,
+            "note": "Only ports 80/443 reach the cluster. The Kubernetes API is never exposed; remote admin goes through a VPN."
+          },
+          {
+            "id": "traefik",
+            "label": "Traefik",
+            "x": 240,
+            "y": 55,
+            "note": "Runs as a DaemonSet with externalTrafficPolicy: Local so real client IPs are kept. An IP-allowlist middleware keeps Argo CD and Infisical LAN-only, and a local mkcert CA provides trusted TLS."
+          },
+          {
+            "id": "git",
+            "label": "Git repo",
+            "x": 70,
+            "y": 150,
+            "note": "Private GitOps repo holding the Helm chart and values. Git is the source of truth; Argo CD pulls it with a read-only deploy key."
+          },
+          {
+            "id": "argocd",
+            "label": "Argo CD",
+            "x": 240,
+            "y": 150,
+            "note": "Renders the Helm chart and syncs it automatically with prune and self-heal, so manual changes in the cluster are reverted."
+          },
+          {
+            "id": "app",
+            "label": "App pods",
+            "x": 415,
+            "y": 150,
+            "note": "A Spring Boot service pulled from a private registry. Config comes in as environment variables from a Kubernetes Secret, and pods restart on their own when a secret changes."
+          },
+          {
+            "id": "infisical",
+            "label": "Infisical",
+            "x": 240,
+            "y": 245,
+            "note": "Self-hosted secrets manager (with PostgreSQL and Redis), installed with Helm. Nothing secret is stored in Git."
+          },
+          {
+            "id": "operator",
+            "label": "Operator",
+            "x": 415,
+            "y": 245,
+            "note": "Infisical Operator authenticates with a machine identity and syncs a secrets folder into a Kubernetes Secret over the in-cluster service address."
+          }
+        ],
+        "edges": [
+          ["users", "traefik"],
+          ["traefik", "app", "vh"],
+          ["git", "argocd"],
+          ["argocd", "app"],
+          ["infisical", "operator"],
+          ["operator", "app"]
+        ]
+      },
+      "pipeline": {
+        "groups": [
+          {
+            "label": "CI · GitHub Actions",
+            "x": 15,
+            "y": 115,
+            "w": 475,
+            "h": 72
+          },
+          {
+            "label": "k3s cluster",
+            "x": 15,
+            "y": 215,
+            "w": 475,
+            "h": 72
+          }
+        ],
+        "nodes": [
+          {
+            "id": "src",
+            "label": "Source repo",
+            "x": 75,
+            "y": 50,
+            "note": "Application code lives in its own repo, separate from the config (GitOps) repo."
+          },
+          {
+            "id": "push",
+            "label": "git push main",
+            "x": 240,
+            "y": 50,
+            "note": "A push to the target branch triggers the pipeline."
+          },
+          {
+            "id": "build",
+            "label": "Build/test/push",
+            "x": 415,
+            "y": 150,
+            "note": "Runs tests, builds the Docker image and pushes it to the private registry with an immutable commit-SHA tag."
+          },
+          {
+            "id": "clone",
+            "label": "Clone config",
+            "x": 240,
+            "y": 150,
+            "note": "Checks out the config repo that holds the Helm chart and values, using a token that can only push to that repo. CI never gets cluster credentials."
+          },
+          {
+            "id": "bump",
+            "label": "Bump Helm tag",
+            "x": 75,
+            "y": 150,
+            "note": "Sets image.tag in the service's values.yaml to the new SHA, commits and pushes, retrying with a rebase if another build pushed first."
+          },
+          {
+            "id": "argocd",
+            "label": "Argo CD",
+            "x": 75,
+            "y": 250,
+            "note": "Notices the new commit in the config repo and renders the Helm chart again. The Kubernetes API never has to be exposed to CI."
+          },
+          {
+            "id": "sync",
+            "label": "Cluster sync",
+            "x": 240,
+            "y": 250,
+            "note": "Applies the change with prune and self-heal, so the cluster always matches Git. Rolling back is just a git revert of the tag commit."
+          },
+          {
+            "id": "rollout",
+            "label": "Rolling update",
+            "x": 415,
+            "y": 250,
+            "note": "New pods with the new image tag replace the old ones gradually, with secrets still injected by the Infisical Operator."
+          }
+        ],
+        "edges": [
+          ["src", "push"],
+          ["push", "build", "vh"],
+          ["build", "clone"],
+          ["clone", "bump"],
+          ["bump", "argocd"],
+          ["argocd", "sync"],
+          ["sync", "rollout"]
+        ]
+      }
+    },
+    {
+      "name": "DevOps Pipeline & Kubernetes Research",
+      "description": "Benchmarked 4 Kubernetes distributions (kubeadm, kind, minikube, k3s) on RAM and resource use and picked k3s for low-resource servers. Built a full build, test and deploy pipeline for Java and React apps on a self-hosted k3s cluster, with Grafana, VictoriaMetrics and Loki dashboards for deployments and logs.",
+      "status": "completed",
+      "tags": [
+        "k3s",
+        "GitHub Actions",
+        "Grafana",
+        "VictoriaMetrics",
+        "Loki",
+        "Docker",
+        "Java",
+        "React"
+      ],
+      "links": [
+        {
+          "name": "Source",
+          "href": "https://github.com/vidit-11/k3s-ci-cd-pipeline-backend",
+          "icon": "github"
+        }
+      ],
+      "architecture": {
+        "groups": [
+          {
+            "label": "CI/CD",
+            "x": 20,
+            "y": 30,
+            "w": 460,
+            "h": 80
+          },
+          {
+            "label": "Observability",
+            "x": 170,
+            "y": 150,
+            "w": 310,
+            "h": 130
+          }
+        ],
+        "nodes": [
+          {
+            "id": "push",
+            "label": "git push",
+            "x": 85,
+            "y": 70,
+            "note": "Java and React apps; every push to main starts the pipeline."
+          },
+          {
+            "id": "actions",
+            "label": "GitHub Actions",
+            "x": 250,
+            "y": 70,
+            "note": "Build, test and deploy stages, with Docker images built in CI."
+          },
+          {
+            "id": "k3s",
+            "label": "k3s cluster",
+            "x": 410,
+            "y": 70,
+            "note": "Self-hosted k3s, chosen after benchmarking kubeadm, kind, minikube and k3s for RAM and resource use."
+          },
+          {
+            "id": "vm",
+            "label": "VictoriaMetrics",
+            "x": 250,
+            "y": 190,
+            "note": "Lighter than Prometheus on small servers while staying Prometheus-compatible."
+          },
+          {
+            "id": "loki",
+            "label": "Loki",
+            "x": 410,
+            "y": 190,
+            "note": "Log aggregation for every app on the cluster."
+          },
+          {
+            "id": "grafana",
+            "label": "Grafana",
+            "x": 250,
+            "y": 250,
+            "note": "Developer-facing dashboards for deployment monitoring and logs."
+          }
+        ],
+        "edges": [
+          ["push", "actions"],
+          ["actions", "k3s"],
+          ["k3s", "loki"],
+          ["k3s", "vm", "vh"],
+          ["vm", "grafana"],
+          ["loki", "grafana", "hv"]
+        ]
+      }
+    },
+    {
+      "name": "Automated Receipt Processing",
+      "description": "A fully serverless pipeline that automates expense tracking end to end. AWS Textract extracts key-value pairs and line items from receipt images with over 95% accuracy, results are stored in DynamoDB, and SES emails the user a summary, so there's no manual data entry.",
+      "status": "completed",
+      "tags": ["Python", "S3", "Lambda", "Textract", "DynamoDB", "SES"],
+      "links": [
+        {
+          "name": "Source",
+          "href": "https://github.com/vidit-11/receipt-automation",
+          "icon": "github"
+        }
+      ],
+      "architecture": {
+        "groups": [
+          {
+            "label": "AWS · serverless",
+            "x": 20,
+            "y": 25,
+            "w": 460,
+            "h": 255
+          }
+        ],
+        "nodes": [
+          {
+            "id": "s3",
+            "label": "S3 upload",
+            "x": 85,
+            "y": 150,
+            "note": "A receipt image landing in the bucket triggers the pipeline. No servers to run."
+          },
+          {
+            "id": "lambda",
+            "label": "Lambda",
+            "x": 230,
+            "y": 150,
+            "note": "Python function that orchestrates extraction, storage and notification."
+          },
+          {
+            "id": "textract",
+            "label": "Textract",
+            "x": 400,
+            "y": 70,
+            "note": "Extracts key-value pairs and line items from unstructured receipts with over 95% accuracy."
+          },
+          {
+            "id": "dynamo",
+            "label": "DynamoDB",
+            "x": 400,
+            "y": 150,
+            "note": "Stores the parsed receipt data."
+          },
+          {
+            "id": "ses",
+            "label": "SES",
+            "x": 400,
+            "y": 230,
+            "note": "Emails the user the extracted receipt details, closing the loop."
+          }
+        ],
+        "edges": [
+          ["s3", "lambda"],
+          ["lambda", "textract"],
+          ["lambda", "dynamo"],
+          ["lambda", "ses"]
+        ]
+      }
+    }
+  ]
+}
