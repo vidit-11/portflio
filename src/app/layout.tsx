@@ -3,19 +3,24 @@ import Header from "@/components/Header";
 import Providers from "@/components/Providers";
 import { cn } from "@/lib/utils";
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 import homeContent from "@/data/home.json";
 
-const inter = Inter({
-  subsets: ["latin"],
+// Fonts are bundled from npm (@fontsource-variable) instead of next/font/google,
+// so builds don't depend on reaching Google Fonts
+const inter = localFont({
+  src: "../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2",
   variable: "--font-sans",
-  weight: ["400", "500", "600", "700"],
+  weight: "100 900",
+  display: "swap",
 });
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
+const jetbrainsMono = localFont({
+  src: "../../node_modules/@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2",
   variable: "--font-mono",
+  weight: "100 800",
+  display: "swap",
 });
 
 const title = `${homeContent.name} | ${homeContent.role}`;
