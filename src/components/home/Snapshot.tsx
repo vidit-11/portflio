@@ -12,9 +12,12 @@ interface Props {
 // Current role plus a few headline numbers
 export default function Snapshot({ career, stats }: Props) {
   const { status } = homeContent;
-  const since = career
-    .flatMap((org) => org.positions)
-    .find((p) => !p.end)?.start;
+  // Date joined the current company: earliest start across its positions,
+  // so a promotion doesn't reset it
+  const currentOrg = career.find((org) => org.positions.some((p) => !p.end));
+  const since = currentOrg?.positions
+    .map((p) => p.start)
+    .sort((a, b) => Date.parse(`1 ${a}`) - Date.parse(`1 ${b}`))[0];
 
   return (
     <div className="flex flex-col gap-4">
